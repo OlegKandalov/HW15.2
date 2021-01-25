@@ -1,39 +1,36 @@
 package org.cursor15.models;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "books")
+@Table
 public class Book {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "book_title")
+    @Column
     private String bookTitle;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn
+    private UsersTable user;
 
     @OneToMany(mappedBy = "book", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Author> authors;
 
-    public Book() {
-        authors = new ArrayList<>();
-    }
+    public Book() {}
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public User getUser() {
+    public UsersTable getUsers() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUsers(UsersTable user) {
         this.user = user;
     }
 

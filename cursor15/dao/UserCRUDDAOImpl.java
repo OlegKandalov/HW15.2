@@ -1,7 +1,7 @@
 package org.cursor15.dao;
 
 import org.cursor15.utils.HibernateSessionFactoryUtil;
-import org.cursor15.models.User;
+import org.cursor15.models.UsersTable;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Component;
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class UserCRUDDAOImpl implements LibraryCRUD<User> {
+public class UserCRUDDAOImpl implements LibraryCRUD<UsersTable> {
 
-    public void create(User user) {
+    public void create(UsersTable user) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tr = session.beginTransaction();
         session.save(user);
@@ -19,15 +19,15 @@ public class UserCRUDDAOImpl implements LibraryCRUD<User> {
         session.close();
     }
 
-    public User getById(int id) {
+    public UsersTable getById(int id) {
         return HibernateSessionFactoryUtil
                 .getSessionFactory()
                 .openSession()
-                .get(User.class, id);
+                .get(UsersTable.class, id);
     }
 
 
-    public void update(User user) {
+    public void update(UsersTable user) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tr =  session.beginTransaction();
         session.update(user);
@@ -35,7 +35,7 @@ public class UserCRUDDAOImpl implements LibraryCRUD<User> {
         session.close();
     }
 
-    public void delete(User user) {
+    public void delete(UsersTable user) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tr = session.beginTransaction();
         session.delete(user);
@@ -43,11 +43,11 @@ public class UserCRUDDAOImpl implements LibraryCRUD<User> {
         session.close();
     }
 
-    public List<User> showAllUsers(User user) {
-        List<User> users = (List<User>) HibernateSessionFactoryUtil
+    public List<UsersTable> showAllUsers(UsersTable user) {
+        List<UsersTable> users = (List<UsersTable>) HibernateSessionFactoryUtil
                 .getSessionFactory()
                 .openSession()
-                .createQuery("from User").list();
+                .createQuery("from UsersTable").list();
         return users;
     }
 }

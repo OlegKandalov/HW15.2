@@ -3,20 +3,24 @@ package org.cursor15.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "authors")
+@Table
 public class Author {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "author_name")
+    @Column
     private String authorName;
 
     @ManyToOne
-    @JoinColumn(name = "book_id")
+    @JoinColumn
     private Book book;
 
     public Author() {}
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
 
     public void setId(int id) {
         this.id = id;

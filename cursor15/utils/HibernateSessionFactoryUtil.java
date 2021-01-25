@@ -2,7 +2,7 @@ package org.cursor15.utils;
 
 import org.cursor15.models.Author;
 import org.cursor15.models.Book;
-import org.cursor15.models.User;
+import org.cursor15.models.UsersTable;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -16,7 +16,7 @@ public class HibernateSessionFactoryUtil {
         if (sessionFactory == null) {
             try {
                 Configuration configuration = new Configuration().configure();
-                configuration.addAnnotatedClass(User.class);
+                configuration.addAnnotatedClass(UsersTable.class);
                 configuration.addAnnotatedClass(Book.class);
                 configuration.addAnnotatedClass(Author.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
