@@ -1,27 +1,28 @@
 package org.cursor15.models;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @Component
+@Scope("prototype")
+@Entity
 @Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column(name = "user_name")
     private String name;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Book> books;
 
-    public User() {}
-
-    public User(String name) {
-        this.name = name;
+    public User() {
         books = new ArrayList<>();
     }
 

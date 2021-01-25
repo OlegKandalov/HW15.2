@@ -1,10 +1,9 @@
 package org.cursor15.dao;
 
+import org.cursor15.utils.HibernateSessionFactoryUtil;
 import org.cursor15.models.Book;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,16 +11,9 @@ import java.util.List;
 @Component
 public class BookCRUDDAOImpl implements LibraryCRUD <Book> {
 
-    private final SessionFactory sessionFactory;
-
-    @Autowired
-    public BookCRUDDAOImpl(SessionFactory sessionFactory){
-        this.sessionFactory = sessionFactory;
-    }
-
     @Override
     public void create(Book book) {
-        Session session = sessionFactory.openSession();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tr = session.beginTransaction();
         session.save(book);
         tr.commit();
@@ -30,13 +22,15 @@ public class BookCRUDDAOImpl implements LibraryCRUD <Book> {
 
     @Override
     public Book getById(int id) {
-        return sessionFactory.openSession()
+        return HibernateSessionFactoryUtil
+                .getSessionFactory()
+                .openSession()
                 .get(Book.class, id);
     }
 
     @Override
     public void update(Book book) {
-        Session session = sessionFactory.openSession();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tr =  session.beginTransaction();
         session.update(book);
         tr.commit();
@@ -45,7 +39,7 @@ public class BookCRUDDAOImpl implements LibraryCRUD <Book> {
 
     @Override
     public void delete(Book book) {
-        Session session = sessionFactory.openSession();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tr = session.beginTransaction();
         session.delete(book);
         tr.commit();
@@ -53,7 +47,9 @@ public class BookCRUDDAOImpl implements LibraryCRUD <Book> {
     }
 
     public List<Book> getAllBooks() {
-        List<Book> books = (List<Book>) sessionFactory.openSession()
+        List<Book> books = (List<Book>) HibernateSessionFactoryUtil
+                .getSessionFactory()
+                .openSession()
                 .createQuery("from Book").list();
         return books;
     }

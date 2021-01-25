@@ -1,5 +1,6 @@
 package org.cursor15.models;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Scope("prototype")
 @Entity
 @Table(name = "books")
 public class Book {
@@ -21,13 +23,10 @@ public class Book {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Author> authors;
 
-    public Book() {}
-
-    public Book(String bookTitle) {
-        this.bookTitle = bookTitle;
+    public Book() {
         authors = new ArrayList<>();
     }
 
@@ -55,8 +54,8 @@ public class Book {
         return authors;
     }
 
-    public void setAuthors(Author author) {
-        authors.add(author);
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
     }
 
     @Override

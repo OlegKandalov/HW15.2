@@ -1,11 +1,13 @@
 package org.cursor15.models;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
-@Entity
 @Component
+@Scope("prototype")
+@Entity
 @Table(name = "authors")
 public class Author {
     @Id
@@ -30,18 +32,6 @@ public class Author {
     }
 
     public void setAuthorName(String authorName) {
-        this.authorName = authorName;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
-
-    public Author(String authorName){
         this.authorName = authorName;
     }
 

@@ -1,10 +1,9 @@
 package org.cursor15.dao;
 
+import org.cursor15.utils.HibernateSessionFactoryUtil;
 import org.cursor15.models.Author;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,16 +11,9 @@ import java.util.List;
 @Component
 public class AuthorCRUDDAOImpl implements LibraryCRUD<Author> {
 
-    private SessionFactory sessionFactory;
-
-    @Autowired
-    public AuthorCRUDDAOImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
     @Override
     public void create(Author author) {
-        Session session = sessionFactory.openSession();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tr = session.beginTransaction();
         session.save(author);
         tr.commit();
@@ -30,22 +22,36 @@ public class AuthorCRUDDAOImpl implements LibraryCRUD<Author> {
 
     @Override
     public Author getById(int id) {
-        return sessionFactory.openSession()
+        return HibernateSessionFactoryUtil
+                .getSessionFactory()
+                .openSession()
                 .get(Author.class, id);
     }
 
     @Override
     public void update(Author author) {
-        Session session = sessionFactory.openSession();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tr =  session.beginTransaction();
         session.update(author);
         tr.commit();
         session.close();
     }
 
+    public void deleteById(int id) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tr = session.beginTransaction();
+        Author author = HibernateSessionFactoryUtil
+                .getSessionFactory()
+                .openSession()
+                .get(Author.class, id);
+        session.delete(author);
+        tr.commit();
+        session.close();
+    }
+
     @Override
     public void delete(Author author) {
-        Session session = sessionFactory.openSession();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tr = session.beginTransaction();
         session.delete(author);
         tr.commit();
@@ -53,7 +59,9 @@ public class AuthorCRUDDAOImpl implements LibraryCRUD<Author> {
     }
 
     public List<Author> getAllAuthors() {
-        List<Author> authors = (List<Author>) sessionFactory.openSession()
+        List<Author> authors = (List<Author>) HibernateSessionFactoryUtil
+                .getSessionFactory()
+                .openSession()
                 .createQuery("from Author").list();
         return authors;
     }
