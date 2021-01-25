@@ -1,17 +1,12 @@
 package org.cursor15.models;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 
-@Component
-@Scope("prototype")
 @Entity
 @Table(name = "authors")
 public class Author {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "author_name")
@@ -22,6 +17,10 @@ public class Author {
     private Book book;
 
     public Author() {}
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;

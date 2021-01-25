@@ -7,13 +7,11 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-@Scope("prototype")
 @Entity
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "user_name")
@@ -29,6 +27,10 @@ public class User {
     public void addBook(Book book){
         book.setUser(this);
         books.add(book);
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void removeBook(Book book) {

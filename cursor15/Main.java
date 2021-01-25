@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Main {
@@ -20,30 +21,45 @@ public class Main {
         BookCRUDDAOImpl bookCRUDDAO = context.getBean(BookCRUDDAOImpl.class);
         AuthorCRUDDAOImpl authorCRUDDAO = context.getBean(AuthorCRUDDAOImpl.class);
 
-        Author joanneRowling = context.getBean(Author.class);
+        Author joanneRowling = new Author();
         joanneRowling.setAuthorName("Joanne Rowling");
-        Author michaelJeffreyJordan = context.getBean(Author.class);
+        joanneRowling.setId(1);
+        Author michaelJeffreyJordan = new Author();
         michaelJeffreyJordan.setAuthorName("Michael Jeffrey Jordan");
-        Author cliveStaplesLewis = context.getBean(Author.class);
+        michaelJeffreyJordan.setId(2);
+        Author cliveStaplesLewis = new Author();
         cliveStaplesLewis.setAuthorName("Clive Lewis");
+        cliveStaplesLewis.setId(3);
 
-        List<Author> jAndM = new ArrayList<>();
-        jAndM.add(joanneRowling);
-        jAndM.add(michaelJeffreyJordan);
-
-        Book harryPotter1 = context.getBean(Book.class);
+        Book harryPotter1 = new Book();
         harryPotter1.setBookTitle("Harry Potter and the Philosopher's Stone");
-        Book harryPotter2 = context.getBean(Book.class);
+        harryPotter1.setId(55);
+        Book harryPotter2 = new Book();
         harryPotter2.setBookTitle("Harry Potter and the Chamber of Secrets");
-        Book theLionTheWitchAndTheWardrobe = context.getBean(Book.class);
+        harryPotter2.setId(56);
+        Book theLionTheWitchAndTheWardrobe = new Book();
         theLionTheWitchAndTheWardrobe.setBookTitle("The Lion, the Witch and the Wardrobe");
+        theLionTheWitchAndTheWardrobe.setId(356);
 
-        User martin = context.getBean(User.class);
+        User martin = new User();
         martin.setName("Martin");
+        martin.setId(3);
 
-        userCRUDDAO.create(martin);
-        bookCRUDDAO.create(harryPotter1);
-        authorCRUDDAO.create(michaelJeffreyJordan);
+//        userCRUDDAO.create(martin);
+//        authorCRUDDAO.create(joanneRowling);
+//        authorCRUDDAO.create(michaelJeffreyJordan);
+//        bookCRUDDAO.create(harryPotter1);
+//        bookCRUDDAO.create(harryPotter2);
+//
+//        User user1 = userCRUDDAO.getById(1);
+//
+        List<Author> jAndM = new ArrayList<>();
+        Author author1 = authorCRUDDAO.getById(1);
+        Author author2 = authorCRUDDAO.getById(2);
+        jAndM.add(author1);
+        Book book = bookCRUDDAO.getById(55);
+        book.setAuthors(jAndM);
+        bookCRUDDAO.update(book);
 
     }
 }

@@ -1,19 +1,14 @@
 package org.cursor15.models;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-@Scope("prototype")
 @Entity
 @Table(name = "books")
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "book_title")
@@ -28,6 +23,10 @@ public class Book {
 
     public Book() {
         authors = new ArrayList<>();
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public User getUser() {
