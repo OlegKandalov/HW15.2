@@ -1,29 +1,42 @@
 package org.cursor15.models;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table
+@Proxy(lazy = false)
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int book_id;
 
     @Column
     private String bookTitle;
 
+    @ManyToMany
+    @JoinTable(
+            name = "book_author",
+            joinColumns = {@JoinColumn(name = "book_id")},
+            inverseJoinColumns = {@JoinColumn(name = "author_id")}
+    )
+    private List<Author> authors;
+
     @ManyToOne
-    @JoinColumn
+    @JoinTable(
+            name = "book_user",
+            joinColumns = {@JoinColumn(name = "book_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+    )
     private UsersTable user;
 
-    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER, orphanRemoval = true)
-    private List<Author> authors;
 
     public Book() {}
 
-    public void setId(int id) {
-        this.id = id;
+    public void setBook_id(int id) {
+        this.book_id = id;
     }
 
     public UsersTable getUsers() {
@@ -34,8 +47,8 @@ public class Book {
         this.user = user;
     }
 
-    public int getId() {
-        return id;
+    public int getBook_id() {
+        return book_id;
     }
 
     public String getBookTitle() {
@@ -57,7 +70,7 @@ public class Book {
     @Override
     public String toString() {
         return "Book{" +
-                "id=" + id +
+                "id=" + book_id +
                 ", bookTitle='" + bookTitle + '\'' +
                 '}';
     }

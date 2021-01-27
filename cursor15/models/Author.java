@@ -1,33 +1,41 @@
 package org.cursor15.models;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
+@Proxy(lazy = false)
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int author_id;
 
     @Column
     private String authorName;
 
-    @ManyToOne
-    @JoinColumn
-    private Book book;
+    @ManyToMany
+    @JoinTable(
+            name = "book_author",
+            joinColumns = {@JoinColumn(name = "author_id")},
+            inverseJoinColumns = {@JoinColumn(name = "book_id")}
+    )
+    private List<Book> book;
 
     public Author() {}
 
-    public void setBook(Book book) {
+    public void setBook(List<Book> book) {
         this.book = book;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAuthor_id(int id) {
+        this.author_id = id;
     }
 
-    public int getId() {
-        return id;
+    public int getAuthor_id() {
+        return author_id;
     }
 
     public String getAuthorName() {

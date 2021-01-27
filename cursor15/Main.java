@@ -27,6 +27,12 @@ public class Main {
         Author cliveStaplesLewis = new Author();
         cliveStaplesLewis.setAuthorName("Clive Lewis");
 
+        List<Author> authorsJAndM = new ArrayList<>();
+        authorsJAndM.add(joanneRowling);
+        authorsJAndM.add(michaelJeffreyJordan);
+        List<Author> authorsLewis = new ArrayList<>();
+        authorsLewis.add(cliveStaplesLewis);
+
         Book harryPotter1 = new Book();
         harryPotter1.setBookTitle("Harry Potter and the Philosopher's Stone");
         Book harryPotter2 = new Book();
@@ -34,33 +40,61 @@ public class Main {
         Book theLionTheWitchAndTheWardrobe = new Book();
         theLionTheWitchAndTheWardrobe.setBookTitle("The Lion, the Witch and the Wardrobe");
 
+        List<Book> booksForAuthorJAndM = new ArrayList<>();
+        booksForAuthorJAndM.add(harryPotter1);
+        booksForAuthorJAndM.add(harryPotter2);
+        List<Book> booksForAuthorClive = new ArrayList<>();
+        booksForAuthorClive.add(theLionTheWitchAndTheWardrobe);
+
+        List<Book> booksForUserMartin = new ArrayList<>();
+        booksForUserMartin.add(harryPotter1);
+        List<Book> booksForUserTim = new ArrayList<>();
+        booksForUserTim.add(harryPotter2);
+        List<Book> booksForUserLena = new ArrayList<>();
+        booksForUserLena.add(theLionTheWitchAndTheWardrobe);
+
         UsersTable martin = new UsersTable();
         martin.setName("Martin");
-
         UsersTable tim = new UsersTable();
         tim.setName("Tim");
-
+        UsersTable lena = new UsersTable();
+        lena.setName("Lena");
 
         userCRUDDAO.create(martin);
         userCRUDDAO.create(tim);
+        userCRUDDAO.create(lena);
         authorCRUDDAO.create(joanneRowling);
         authorCRUDDAO.create(michaelJeffreyJordan);
+        authorCRUDDAO.create(cliveStaplesLewis);
         bookCRUDDAO.create(harryPotter1);
         bookCRUDDAO.create(harryPotter2);
+        bookCRUDDAO.create(theLionTheWitchAndTheWardrobe);
 
-        List<Author> jAndM = new ArrayList<>();
-        jAndM.add(joanneRowling);
-        jAndM.add(michaelJeffreyJordan);
+
+
         harryPotter1.setUsers(martin);
+        martin.setBooks(booksForUserMartin);
         harryPotter2.setUsers(tim);
-        joanneRowling.setBook(harryPotter1);
-        michaelJeffreyJordan.setBook(harryPotter2);
+        tim.setBooks(booksForUserTim);
+        theLionTheWitchAndTheWardrobe.setUsers(lena);
+        lena.setBooks(booksForUserLena);
+        joanneRowling.setBook(booksForAuthorJAndM);
+        michaelJeffreyJordan.setBook(booksForAuthorJAndM);
+        harryPotter1.setAuthors(authorsJAndM);
+        harryPotter2.setAuthors(authorsJAndM);
+        cliveStaplesLewis.setBook(booksForAuthorClive);
+        theLionTheWitchAndTheWardrobe.setAuthors(authorsLewis);
 
+
+        userCRUDDAO.update(martin);
+        userCRUDDAO.update(tim);
+        userCRUDDAO.update(lena);
         bookCRUDDAO.update(harryPotter1);
         bookCRUDDAO.update(harryPotter2);
-
+        bookCRUDDAO.update(theLionTheWitchAndTheWardrobe);
         authorCRUDDAO.update(michaelJeffreyJordan);
         authorCRUDDAO.update(joanneRowling);
+        authorCRUDDAO.update(cliveStaplesLewis);
 
     }
 }

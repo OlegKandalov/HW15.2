@@ -1,24 +1,31 @@
 package org.cursor15.models;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table
+@Proxy(lazy = false)
 public class UsersTable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column
+    private int user_id;
 
     @Column
     private String name;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany
+    @JoinTable(
+            name = "book_user",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "book_id")}
+    )
     private List<Book> books;
 
     public UsersTable() {
-        //books = new ArrayList<>();
     }
 
     public void addBook(Book book){
@@ -26,16 +33,8 @@ public class UsersTable {
         books.add(book);
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void removeBook(Book book) {
-        books.remove(book);
-    }
-
-    public int getId() {
-        return id;
+    public int getUser_id() {
+        return user_id;
     }
 
     public String getName() {
@@ -58,7 +57,7 @@ public class UsersTable {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id=" + user_id +
                 ", name='" + name + '\'' +
                 '}';
     }
